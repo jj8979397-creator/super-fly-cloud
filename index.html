@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090711">
+<title>SUPER FLY ULTRA</title>
+<style>
+:root {
+  --bg:#090711;
+  --panel:#151020;
+  --purple:#a855f7;
+  --pink:#e879f9;
+  --text:#f7edff;
+  --muted:#9b8cae;
+  --border:#332344;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;min-height:100vh;
+}
+header{
+  padding:19px 17px;background:#100b1b;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:5;
+}
+.logo{font-size:21px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--pink)}
+.status{font-size:11px;color:#bbf7d0}
+main{padding:18px;max-width:760px;margin:auto;padding-bottom:100px}
+.hero{
+  padding:24px 20px;border-radius:20px;
+  background:linear-gradient(135deg,#27103e,#100b1b 70%);
+  border:1px solid #693b91;
+  box-shadow:0 0 25px #a855f722;
+}
+.hero h1{font-size:27px;margin:0 0 8px}
+.hero p{color:#c4b2d6;font-size:13px;line-height:1.6}
+.tag{
+  color:#e9b5ff;font-size:10px;letter-spacing:2px;
+  font-weight:bold;margin-bottom:12px;
+}
+.search{display:flex;gap:8px;margin:19px 0}
+input,textarea{
+  background:#100c19;color:white;border:1px solid var(--border);
+  border-radius:11px;padding:13px;outline:none;font-size:14px;
+  min-width:0;
+}
+input:focus,textarea:focus{border-color:var(--purple)}
+.search input{flex:1;width:100%}
+button{
+  background:linear-gradient(135deg,#9333ea,#c026d3);
+  border:0;color:white;padding:12px 15px;border-radius:11px;
+  font-weight:bold;cursor:pointer;
+}
+button:active{transform:scale(.97)}
+button.secondary{background:#251932;border:1px solid var(--border)}
+.section-title{font-size:16px;margin:23px 0 13px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.tile{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:15px;padding:17px;cursor:pointer;
+}
+.tile .emoji{font-size:24px}
+.tile h3{font-size:14px;margin:10px 0 5px}
+.tile p{font-size:11px;color:var(--muted);margin:0}
+.card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:15px;margin:10px 0;
+}
+.card h3{font-size:14px;margin:0 0 8px;overflow-wrap:anywhere}
+.card p{font-size:12px;color:var(--muted);line-height:1.5}
+.meta{font-size:10px;color:#d8a5ff;margin:8px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions button{font-size:11px;padding:9px 12px}
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:10;
+  display:flex;justify-content:space-around;
+  background:#110b1b;border-top:1px solid var(--border);
+  padding:10px 3px calc(10px + env(safe-area-inset-bottom));
+}
+nav button{
+  background:transparent;color:#a99ab8;padding:8px 5px;
+  font-size:10px;flex:1;
+}
+nav button.active{color:#e9b5ff;background:#28153a}
+.page{display:none}
+.page.active{display:block}
+textarea{
+  width:100%;min-height:300px;resize:vertical;
+  font-family:monospace;line-height:1.5;
+}
+.small{font-size:11px;color:var(--muted)}
+.empty{text-align:center;padding:28px;color:var(--muted)}
+footer{text-align:center;color:#786a89;font-size:10px;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">SUPER FLY <span>ULTRA</span></div>
+  <div class="status" id="status">● CLOUD</div>
+</header>
+
+<main>
+<section class="page active" id="home">
+  <div class="hero">
+    <div class="tag">NEXT GENERATION CLOUD</div>
+    <h1>Bienvenido a SUPER FLY</h1>
+    <p>Tu biblioteca de recursos Luau y Roblox. Busca proyectos públicos directamente desde nuestra nube.</p>
+    <button onclick="navigate('search')">EXPLORAR CLOUD →</button>
+  </div>
+
+  <h2 class="section-title">Centro de herramientas</h2>
+  <div class="grid">
+    <div class="tile" onclick="navigate('search')">
+      <div class="emoji">☁️</div><h3>Cloud Search</h3>
+      <p>Busca proyectos públicos.</p>
+    </div>
+    <div class="tile" onclick="navigate('editor')">
+      <div class="emoji">⌨️</div><h3>Luau Editor</h3>
+      <p>Escribe y copia tu código.</p>
+    </div>
+    <div class="tile" onclick="navigate('favorites')">
+      <div class="emoji">💜</div><h3>Favoritos</h3>
+      <p>Tus proyectos guardados.</p>
+    </div>
+    <div class="tile" onclick="navigate('settings')">
+      <div class="emoji">⚙️</div><h3>Configuración</h3>
+      <p>Estado y conexión.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="search">
+  <h2>☁️ Cloud Search</h2>
+  <p class="small">Búsqueda conectada a SUPER FLY CLOUD.</p>
+  <div class="search">
+    <input id="query" placeholder="Busca Luau, Roblox, UI..." />
+    <button onclick="searchCloud()">BUSCAR</button>
+  </div>
+  <div id="results"></div>
+</section>
+
+<section class="page" id="editor">
+  <h2>⌨️ Luau Editor</h2>
+  <p class="small">Escribe, edita y copia tus proyectos.</p>
+  <textarea id="code" spellcheck="false" placeholder="-- Escribe tu código Luau aquí..."></textarea>
+  <div class="actions" style="margin-top:12px">
+    <button onclick="copyCode()">COPIAR CÓDIGO</button>
+    <button class="secondary" onclick="saveCode()">GUARDAR</button>
+    <button class="secondary" onclick="clearCode()">LIMPIAR</button>
+  </div>
+  <p class="small" id="editorMessage"></p>
+</section>
+
+<section class="page" id="favorites">
+  <h2>💜 Favoritos</h2>
+  <div id="favoriteList"></div>
+</section>
+
+<section class="page" id="settings">
+  <h2>⚙️ Configuración</h2>
+  <div class="card">
+    <h3>Conexión Cloud</h3>
+    <p id="connection">Comprobando conexión...</p>
+    <button onclick="checkCloud()">COMPROBAR SERVIDOR</button>
+  </div>
+  <div class="card">
+    <h3>Servidor API</h3>
+    <p>super-fly-cloud-1.onrender.com</p>
+    <button class="secondary" onclick="openAPI()">ABRIR API</button>
+  </div>
+  <div class="card">
+    <h3>SUPER FLY ULTRA</h3>
+    <p>Versión 1.0 · Biblioteca y editor Luau.</p>
+  </div>
+</section>
+
+<footer>SUPER FLY ULTRA · POWERED BY SUPER FLY CLOUD</footer>
+</main>
+
+<nav>
+  <button class="active" data-page="home" onclick="navigate('home')">⌂<br>Inicio</button>
+  <button data-page="search" onclick="navigate('search')">⌕<br>Cloud</button>
+  <button data-page="editor" onclick="navigate('editor')">⌨<br>Editor</button>
+  <button data-page="favorites" onclick="navigate('favorites')">♡<br>Guardados</button>
+  <button data-page="settings" onclick="navigate('settings')">⚙<br>Ajustes</button>
+</nav>
+
+<script>
+const API = "https://super-fly-cloud-1.onrender.com";
+let favorites = JSON.parse(localStorage.getItem("sf_favorites") || "[]");
+
+function navigate(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
+  if(page==="favorites") renderFavorites();
+}
+
+async function searchCloud(){
+  const q=document.getElementById("query").value.trim();
+  const out=document.getElementById("results");
+  if(!q){out.innerHTML='<div class="empty">Escribe algo para buscar.</div>';return;}
+  out.innerHTML='<div class="empty">Buscando en la nube...</div>';
+  try{
+    const response=await fetch(API+"/v1/search?q="+encodeURIComponent(q));
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    out.innerHTML="";
+    if(!data.items || !data.items.length){
+      out.innerHTML='<div class="empty">No encontramos resultados.</div>';return;
+    }
+    data.items.forEach(item=>{
+      const card=document.createElement("div");
+      card.className="card";
+      const title=document.createElement("h3");
+      title.textContent=item.name;
+      const desc=document.createElement("p");
+      desc.textContent=item.description || "Sin descripción.";
+      const meta=document.createElement("div");
+      meta.className="meta";
+      meta.textContent=(item.source || "Cloud")+" · "+(item.game || "Roblox")+
+        (item.stars!==undefined?" · ★ "+item.stars:"");
+      const actions=document.createElement("div");
+      actions.className="actions";
+      const open=document.createElement("button");
+      open.textContent="ABRIR";
+      open.onclick=()=>window.open(item.url,"_blank","noopener");
+      const save=document.createElement("button");
+      save.className="secondary";
+      save.textContent="♡ FAVORITO";
+      save.onclick=()=>addFavorite(item);
+      actions.append(open,save);
+      card.append(title,desc,meta,actions);
+      out.append(card);
+    });
+    document.getElementById("status").textContent="● CLOUD ONLINE";
+  }catch(e){
+    out.innerHTML='<div class="empty">No se pudo conectar. Intenta de nuevo.</div>';
+    document.getElementById("status").textContent="● ERROR CLOUD";
+  }
+}
+
+function addFavorite(item){
+  if(favorites.some(f=>f.id===item.id && f.url===item.url)){
+    alert("Ya está en tus favoritos.");return;
+  }
+  favorites.push(item);
+  localStorage.setItem("sf_favorites",JSON.stringify(favorites));
+  alert("¡Guardado en favoritos!");
+}
+
+function renderFavorites(){
+  const list=document.getElementById("favoriteList");
+  list.innerHTML="";
+  if(!favorites.length){
+    list.innerHTML='<div class="empty">Todavía no tienes favoritos.</div>';return;
+  }
+  favorites.forEach((item,index)=>{
+    const card=document.createElement("div");
+    card.className="card";
+    const title=document.createElement("h3");
+    title.textContent=item.name;
+    const desc=document.createElement("p");
+    desc.textContent=item.description || "";
+    const actions=document.createElement("div");
+    actions.className="actions";
+    const open=document.createElement("button");
+    open.textContent="ABRIR";
+    open.onclick=()=>window.open(item.url,"_blank","noopener");
+    const remove=document.createElement("button");
+    remove.className="secondary";
+    remove.textContent="QUITAR";
+    remove.onclick=()=>{
+      favorites.splice(index,1);
+      localStorage.setItem("sf_favorites",JSON.stringify(favorites));
+      renderFavorites();
+    };
+    actions.append(open,remove);
+    card.append(title,desc,actions);
+    list.append(card);
+  });
+}
+
+async function checkCloud(){
+  const label=document.getElementById("connection");
+  label.textContent="Conectando...";
+  try{
+    const r=await fetch(API+"/health");
+    if(!r.ok)throw new Error();
+    const d=await r.json();
+    label.textContent=d.status==="ok"?"● Servidor conectado correctamente.":"Respuesta inesperada.";
+  }catch(e){label.textContent="No se pudo conectar con el servidor.";}
+}
+
+function copyCode(){
+  const code=document.getElementById("code");
+  navigator.clipboard.writeText(code.value)
+    .then(()=>document.getElementById("editorMessage").textContent="Código copiado.")
+    .catch(()=>document.getElementById("editorMessage").textContent="No se pudo copiar.");
+}
+function saveCode(){
+  localStorage.setItem("sf_editor",document.getElementById("code").value);
+  document.getElementById("editorMessage").textContent="Código guardado en este dispositivo.";
+}
+function clearCode(){
+  if(confirm("¿Borrar el contenido del editor?")){
+    document.getElementById("code").value="";
+  }
+}
+function openAPI(){window.open(API+"/docs","_blank","noopener");}
+
+document.getElementById("query").addEventListener("keydown",e=>{
+  if(e.key==="Enter")searchCloud();
+});
+document.getElementById("code").value=localStorage.getItem("sf_editor") || "";
+checkCloud();
+</script>
+</body>
+  </html>
+  
